@@ -3,12 +3,10 @@ const app = express();
 // This is a public sample test API key.
 // Don’t submit any personally identifiable information in requests made with this key.
 // Sign in to see your own test API key embedded in code samples.
-const stripe = require("stripe")(
-  "sk_test_51NeD8dKOmnZTt71uroc70Zw2bGbxoKCgCiStIo1xMldRfCrAPrbEHkMitQSmi7nHuJT7y4BSVxNvxI4nUWrO2YnO00uCvmGiKX"
-);
-
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 app.use(express.static("public"));
 app.use(express.json());
+const port = process.env.PORT || 5000;
 
 const calculateOrderAmount = (items) => {
   // Replace this constant with a calculation of the order's amount
@@ -37,7 +35,4 @@ app.post("/create-payment-intent", async (req, res) => {
 app.get("/working", async (req, res) => {
   res.send("Working!");
 });
-const PORT = process.env.PORT || 5005;
-app.listen(PORT, () => console.log("Node server listining on port ${PORT}"));
-
-// app.listen(4242, () => console.log("Node server listening on port 3000!"));
+app.listen(port, () => console.log(`Node server listining on port ${port}`));
